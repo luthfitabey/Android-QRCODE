@@ -3,17 +3,17 @@ package com.anjilibey.qrcode.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Sementara {
-//    @SerializedName("id")
+    @SerializedName("id")
     public String id;
-//    @SerializedName("semester")
+    @SerializedName("semester")
     public String semester;
-//    @SerializedName("matkul")
+    @SerializedName("matkul")
     public String matkul;
-//    @SerializedName("ruang")
+    @SerializedName("ruang")
     public String ruang;
-//    @SerializedName("dosen")
+    @SerializedName("dosen")
     public String dosen;
-//    @SerializedName("niu")
+    @SerializedName("niu")
     public String niu;
 
     public String getNiu() {
