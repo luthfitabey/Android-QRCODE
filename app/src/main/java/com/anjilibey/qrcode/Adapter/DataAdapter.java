@@ -7,15 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.anjilibey.qrcode.R;
-import com.anjilibey.qrcode.model.Sementara;
+import com.anjilibey.qrcode.model.History;
+import com.anjilibey.qrcode.model.Materi;
+
 import java.util.ArrayList;
 
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
-    private ArrayList<Sementara> values;
+    private ArrayList<History> result;
 
-    public DataAdapter(ArrayList<Sementara> values) {
-        this.values = values;
+    public DataAdapter(ArrayList<History> result) {
+        this.result = result;
     }
 
     @Override
@@ -27,28 +29,27 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.tv_niu.setText(values.get(i).niu);
-        viewHolder.tv_matkul.setText(values.get(i).matkul);
-        viewHolder.tv_ruang.setText(values.get(i).ruang);
-        viewHolder.tv_dosen.setText(values.get(i).dosen);
-        viewHolder.tv_semester.setText(values.get(i).semester);
+        viewHolder.tv_niu.setText(result.get(i).id);
+        viewHolder.tv_waktu.setText(result.get(i).created_at);
+        viewHolder.tv_imei.setText(result.get(i).rating);
+        viewHolder.tv_dosen.setText(result.get(i).komentar);
+        viewHolder.tv_id.setText(result.get(i).id_mhs);
     }
 
  public int getItemCount(){
-     return values.size();
+     return result.size();
  }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_niu, tv_matkul, tv_ruang, tv_dosen, tv_semester;
+        private TextView tv_niu, tv_waktu, tv_imei, tv_dosen, tv_id;
         public ViewHolder(View view) {
             super(view);
 
-            tv_niu = (TextView)view.findViewById(R.id.tvNiu);
-            tv_matkul = (TextView)view.findViewById(R.id.tvMatkul);
-            tv_ruang = (TextView)view.findViewById(R.id.tvRuang);
-            tv_dosen= (TextView)view.findViewById(R.id.tvDosen);
-            tv_semester= (TextView)view.findViewById(R.id.tvSemester);
+            tv_niu = (TextView)view.findViewById(R.id.tvIdPert);
+            tv_waktu = (TextView)view.findViewById(R.id.tvCreated);
+            tv_imei = (TextView)view.findViewById(R.id.tvRating);
+            tv_dosen= (TextView)view.findViewById(R.id.tvKomentar);
+            tv_id= (TextView)view.findViewById(R.id.tvNiu);
         }
     }
-
 }

@@ -10,7 +10,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher1_gg_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -22,15 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".kelas.MainActivity" />
         <activity android:name=".kelas.AbsensiActivity" />
-        <activity android:name=".kelas.ScanActivity" />
-        <activity android:name=".kelas.CalenderActivity" />
+        <activity android:name=".kelas.JadwalActivity" />
         <activity android:name=".kelas.HistoryActivity" />
-        <activity android:name=".kelas.AboutActivity" />
         <activity android:name=".kelas.QrScanner" />
 
-        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity android:name=".kelas.MateriActivity" />
+        <activity android:name=".kelas.RegisterActivity" />
+        <activity android:name=".kelas.LoginActivity" />
+        <activity android:name=".kelas.UpdateProfil" />
+        <activity android:name=".kelas.Dashboard" />
     </application>
 
 </manifest>

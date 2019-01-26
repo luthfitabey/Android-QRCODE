@@ -1,7 +1,7 @@
 package com.anjilibey.qrcode.Api;
 
 public class UtilsApi {
-    public static final String BASE_URL_API = "http://10.203.206.128:8000";
+    public static final String BASE_URL_API = "http://10.203.246.152:8000";
 
     // Mendeklarasikan Interface BaseApiService
     public static BaseApiService getAPIService(){

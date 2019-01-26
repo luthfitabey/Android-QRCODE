@@ -9,7 +9,6 @@ import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,7 +24,6 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class QrScanner extends AppCompatActivity implements Serializable{
 
@@ -35,7 +33,8 @@ public class QrScanner extends AppCompatActivity implements Serializable{
     CameraSource cameraSource;
     EditText metHasil;
     final int RequestCameraPermissionID = 1001;
-    ArrayList<String> hasil = new ArrayList<String>();
+    String hasil, semestera, matkula, dosena, ruanga;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -69,7 +68,6 @@ public class QrScanner extends AppCompatActivity implements Serializable{
 
         cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
         txtResult = (TextView) findViewById(R.id.txtResult);
-        metHasil = (EditText) findViewById(R.id.etHasil);
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
@@ -96,7 +94,6 @@ public class QrScanner extends AppCompatActivity implements Serializable{
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
             }
 
             @Override
@@ -128,27 +125,15 @@ public class QrScanner extends AppCompatActivity implements Serializable{
                 }
             }
         });
-
-    }
-
-    public void save(View view) {
-        hasil.add(txtResult.getText().toString());
-        //create array
-        int listSize = hasil.size();
-        for (int i = 0; i<listSize; i++){
-            Log.i("Member name: ", hasil.get(i));
-            metHasil.setText(hasil.get(i));
-        }
     }
 
     public void done(View view) {
-//        Bundle extra = new Bundle();
-//        extra.putSerializable("hasil", hasil);
-//
-//        Intent intent = new Intent(getBaseContext(), ScanActivity.class);
-//        intent.putExtra("hasil", hasil);
-        Intent intent = new Intent(QrScanner.this, ScanActivity.class);
-        intent.putExtra("hasil", hasil);
-        startActivity(intent);
+        hasil = txtResult.getText().toString();
+        Intent back = new Intent(QrScanner.this, AbsensiActivity.class);
+        back.putExtra("hasil", hasil);
+        startActivity(back);
+        finish();
     }
+
+
 }

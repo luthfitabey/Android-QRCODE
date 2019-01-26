@@ -18,4 +18,5 @@
         <item>F</item>
     </string-array>
     <string name="result_text_default">Fokuskan kamera ke kode QR</string>
+    <string name="twitterUsername" />
 </resources>
