@@ -3,15 +3,15 @@ package com.anjilibey.qrcode.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Profil {
-    @SerializedName("profiles")
-    public String profiles;
+    @SerializedName("values")
+    public String values;
 
     public String getProfiles() {
-        return profiles;
+        return values;
     }
 
     public void setProfiles(String profiles) {
-        this.profiles = profiles;
+        this.values = values;
     }
 
     @SerializedName("id")

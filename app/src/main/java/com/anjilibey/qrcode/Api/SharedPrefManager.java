@@ -9,6 +9,7 @@ public class SharedPrefManager {
     public static final String SP_MAHASISWA_APP = "spMahasiswaApp";
 
     public static final String SP_TOKEN = "spToken";
+    public static final String SP_ID= "spId";
 
     public static final String SP_SUDAH_LOGIN = "spSudahLogin";
 
@@ -42,6 +43,9 @@ public class SharedPrefManager {
 
     public String getSpToken(){
         return sp.getString(SP_TOKEN, "");
+    }
+    public String getSpId(){
+        return sp.getString(SP_ID, "");
     }
 
 

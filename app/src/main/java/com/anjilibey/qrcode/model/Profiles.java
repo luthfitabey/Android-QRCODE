@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Profiles {
-    @SerializedName("profiles")
+    @SerializedName("values")
     public List<Profil> profiles;
 
     public List<Profil> getProfiles() {

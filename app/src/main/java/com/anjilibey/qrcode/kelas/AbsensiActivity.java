@@ -1,9 +1,11 @@
 package com.anjilibey.qrcode.kelas;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,10 +23,21 @@ import com.anjilibey.qrcode.Api.BaseApiService;
 import com.anjilibey.qrcode.Api.SharedPrefManager;
 import com.anjilibey.qrcode.Api.UtilsApi;
 import com.anjilibey.qrcode.R;
+import com.anjilibey.qrcode.model.Pertemuan;
+import com.anjilibey.qrcode.model.Pertemuans;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,9 +47,13 @@ import retrofit2.Response;
 
 public class AbsensiActivity extends AppCompatActivity implements Serializable{
     BaseApiService mApiService;
-    TextView mid, mcapaian, mkesesuaian, mmateri, mketerangan, mwaktum, mwaktus, mniu, mnama, mprodi, mangakatan;
+    TextView mid, mcapaian, mkesesuaian, mmateri, mketerangan, mwaktum, mwaktus, mniu, mnama, mprodi, mangakatan, mnip;
     TelephonyManager tm;
-    String imei, hasil, ratingan;
+    String imei, ratingan;
+    String hasil;
+    public String getHs() {
+        return hasil;
+    }
     RatingBar mRatingBar;
     TextView mRatingScale;
     TextView mLink;
@@ -62,21 +79,21 @@ public class AbsensiActivity extends AppCompatActivity implements Serializable{
         mprodi = findViewById(R.id.txtprodi);
         mangakatan = findViewById(R.id.txtangkatan);
         mLink = findViewById(R.id.txtLink);
+        mnip = findViewById(R.id.txtnip);
         //penting api
         mApiService = UtilsApi.getAPIService();
-        //shared pref
+        //token
         sharedPrefManager = new SharedPrefManager(AbsensiActivity.this);
-        // get user data from session
-
         token = sharedPrefManager.getSpToken();
         Log.d("token dari shared", token);
 
-        //ambil id pertemuan dari qrscaner
+//ambil id pertemuan dari qrscaner
         Intent intent = getIntent();
         hasil = intent.getStringExtra("hasil");
         mid.setText(hasil);
+        sharedPrefManager.saveSPString(SharedPrefManager.SP_ID, hasil);
 
-        //ambil imei
+//ambil imei
         tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -90,7 +107,7 @@ public class AbsensiActivity extends AppCompatActivity implements Serializable{
         }
         imei = tm.getDeviceId();
 
-        //rating
+//rating
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
         mRatingScale = (TextView) findViewById(R.id.tvRatingScale);
         mFeedback = (EditText) findViewById(R.id.etKomentar);
@@ -127,45 +144,150 @@ public class AbsensiActivity extends AppCompatActivity implements Serializable{
             }
         });
 
+
+
     //clickable link
         mLink.setMovementMethod(LinkMovementMethod.getInstance());
+    //untuk retrofit
+        getResultPertemuan();
 
+//      api get untuk asynctask
+        String url = "http://10.203.246.152:8000/api/profile";
+        FetchData fetchData = new FetchData();
+        fetchData.execute(url);
     }
 
-    public void btnScan(View view) {
-        Intent intent = new Intent(AbsensiActivity.this, QrScanner.class);
-        startActivity(intent);
-    }
-
-    public void btnSubmit(View view) {
-                if (mFeedback.getText().toString().isEmpty()) {
-                    Toast.makeText(AbsensiActivity.this, "Pastikan anda telah menuliskan komentar dan melekukan rating", Toast.LENGTH_LONG).show();
+    private void getResultPertemuan() {
+        final ProgressDialog loading = ProgressDialog.show(AbsensiActivity.this, "Fetching Data","Please wait..",false,false);
+        mApiService.getPertemuan("Bearer "+token,
+                hasil).enqueue(new Callback<Pertemuans>() {
+            @Override
+            public void onResponse(Call<Pertemuans> call, Response<Pertemuans> response) {
+                if (response.isSuccessful()) {
+                    loading.dismiss();
+                    List<Pertemuan> pertemuan = response.body().getPertemuan();
+                    for (Pertemuan data : pertemuan) {
+                        Log.d("id haha: ", data.getId());
+                        mcapaian.setText(data.getCapaian());
+                        mkesesuaian.setText(data.getKesesuaian_rkps());
+                        mmateri.setText(data.getMateri());
+                        mketerangan.setText(data.getKeterangan());
+                        mwaktum.setText(data.getWaktu_mulai());
+                        mwaktus.setText(data.getWaktu_selesai());
+                        mLink.setText(data.getMateri());
+//                        mnip.setText(data.getNip_dosen());
+                    }
                 }
                 else {
-                    mApiService.detailRequest(
-                            "Application/json",
-                            "Bearer "+token,
-                            ratingan,
-                            mFeedback.getText().toString(),
-                            imei,
-                            mid.getText().toString()
-                    ).enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(AbsensiActivity.this, "Berhasil Disimpan, Terimakasih atas feedback anda", Toast.LENGTH_SHORT).show();
-                                mFeedback.setText("");
-                                mRatingBar.setRating(0);
-                            } else
-                                Toast.makeText(AbsensiActivity.this, "Gagal Disimpan, pastikan anda tidak melakukan presensi di handphone teman anda", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Log.e("debug", "onFailure: ERROR > " + t.getMessage());
-                            Toast.makeText(AbsensiActivity.this, "Koneksi Internet Bermasalah", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    loading.dismiss();
+                    Log.d("hasilnya: ", "gagal");
                 }
+            }
+            @Override
+            public void onFailure(Call<Pertemuans> call, Throwable t) {
+                loading.dismiss();
+                Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+            }
+
+        });
     }
+    public class FetchData extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = null;
+
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection connection =
+                        (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty("Content-type", "application/json");
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+                connection.connect();
+
+                int response = connection.getResponseCode();
+                Log.d("DEBUG1", "RESPONSE CODE : " + response);
+
+                //mendownload data yang berupa String
+                BufferedReader r = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream())
+                );
+
+                StringBuilder total = new StringBuilder();
+                String line;
+
+                while ((line = r.readLine()) != null) {
+                    total.append(line);
+                }
+                result = total.toString();
+                Log.d("DEBUG1", "RESULT :" + result);
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            String niu, angkatan, nama, prodi;
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                niu = jsonObject.getJSONObject("profiles").getString("niu");
+                angkatan = jsonObject.getJSONObject("profiles").getString("angkatan");
+                nama = jsonObject.getJSONObject("profiles").getString("nama");
+                prodi = jsonObject.getJSONObject("profiles").getString("prodi");
+                Log.d("GetNiu", niu);
+                mnama.setText(nama);
+                mniu.setText(niu);
+                mprodi.setText(prodi);
+                mangakatan.setText(angkatan);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+        public void btnScan(View view) {
+            Intent intent = new Intent(AbsensiActivity.this, QrScanner.class);
+            startActivity(intent);
+        }
+
+        public void btnSubmit(View view) {
+            if (mFeedback.getText().toString().isEmpty()) {
+                Toast.makeText(AbsensiActivity.this, "Pastikan anda telah menuliskan komentar dan melekukan rating", Toast.LENGTH_LONG).show();
+            } else {
+                mApiService.detailRequest(
+                        "Application/json",
+                        "Bearer " + token,
+                        ratingan,
+                        mFeedback.getText().toString(),
+                        imei,
+                        mid.getText().toString()
+                ).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(AbsensiActivity.this, "Berhasil Disimpan, Terimakasih atas feedback anda", Toast.LENGTH_SHORT).show();
+                            mFeedback.setText("");
+                            mRatingBar.setRating(0);
+                        } else
+                            Toast.makeText(AbsensiActivity.this, "Gagal Disimpan, pastikan anda tidak melakukan presensi di handphone teman anda", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                        Toast.makeText(AbsensiActivity.this, "Koneksi Internet Bermasalah", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+
 }
