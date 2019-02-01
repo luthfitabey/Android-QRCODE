@@ -48,7 +48,7 @@ public class MainActivity extends Fragment{
                         startActivity(intent);
                     }
                     else if(finalI == 3 ){
-                        Intent intent = new Intent(getActivity(), MateriActivity.class);
+                        Intent intent = new Intent(getActivity(), KelasActivity.class);
                         startActivity(intent);
                     }
                     else{

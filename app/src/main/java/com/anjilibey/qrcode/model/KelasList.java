@@ -3,15 +3,15 @@ package com.anjilibey.qrcode.model;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
-public class SementaraList {
+public class KelasList {
     @SerializedName("values")
-    private ArrayList<Sementara> values;
+    private ArrayList<Kelas> values;
 
-    public ArrayList<Sementara> getSementaraArrayList() {
+    public ArrayList<Kelas> getSementaraArrayList() {
         return values;
     }
 
-    public void setSementaraArrayList(ArrayList<Sementara> sementaraArrayList) {
+    public void setSementaraArrayList(ArrayList<Kelas> sementaraArrayList) {
         this.values = sementaraArrayList;
     }
 

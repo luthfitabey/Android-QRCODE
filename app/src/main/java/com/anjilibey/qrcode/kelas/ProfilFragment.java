@@ -2,6 +2,7 @@ package com.anjilibey.qrcode.kelas;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -49,8 +50,9 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
     TextView tvangkatan;
     TextView tvphone;
     TextView tvnpwp;
-    Button btnOut;
-
+    Button btnOut, btnUbah;
+    String idP;
+    Context mContext;
     SharedPrefManager sharedPrefManager;
     String token;
     @Override
@@ -60,11 +62,11 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
         mApiService = UtilsApi.getAPIService();
         sharedPrefManager = new SharedPrefManager(getActivity());
         // get user data from session
-
+        mContext=getActivity();
         token = sharedPrefManager.getSpToken();
         Log.d("profil token", token);
 
-        String url = "http://10.203.246.152:8000/api/profile";
+        String url = "http://10.203.253.239:8000/api/profile";
 
         FetchData fetchData = new FetchData();
         fetchData.execute(url);
@@ -84,6 +86,7 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
         tvphone = view.findViewById(R.id.phone);
         tvnpwp = view.findViewById(R.id.npwp);
         btnOut = view.findViewById(R.id.btnKeluar);
+        btnUbah = view.findViewById(R.id.btnUbh);
         sharedPrefManager = new SharedPrefManager(getActivity());
         btn.setOnClickListener(this);
 
@@ -135,6 +138,16 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), LoginActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 getActivity().finish();
+            }
+        });
+        btnUbah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent abc = new Intent(mContext, UbahPass.class);
+                abc.putExtra("nganu", idP);
+                Log.d("id profil", idP);
+                startActivity(abc);
+//                getActivity().finish();
             }
         });
 
@@ -199,6 +212,8 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
             String niu, nif, alamat, angkatan, nama, prodi, nik, no_rek, na_rek, npwp, no_telp;
             try {
                 JSONObject jsonObject = new JSONObject(s);
+                idP = jsonObject.getJSONObject("profiles").getString("id");
+                Log.d("anu", idP);
                 niu = jsonObject.getJSONObject("profiles").getString("niu");
                 nif = jsonObject.getJSONObject("profiles").getString("nif");
                 alamat = jsonObject.getJSONObject("profiles").getString("alamat");

@@ -38,11 +38,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_weight="1">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ruang                :"
+                    android:text="Ruang"
                     android:layout_weight="1"/>
             </LinearLayout>
 
@@ -81,15 +81,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Semester          :"
+                android:text="Semester"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/jadSem"
-                android:layout_weight="14"
+                android:layout_weight="1"
                 android:text="5"
                 />
         </LinearLayout>
@@ -98,15 +98,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NIP Dosen         :"
+                android:text="NIP Dosen"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/jadNip"
-                android:layout_weight="14"
+                android:layout_weight="1"
                 android:text="654645646"
                 />
         </LinearLayout>
@@ -115,16 +115,67 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hari                    :"
+                android:text="Hari"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/jadHar"
-                android:layout_weight="14"
+                android:layout_weight="1"
                 android:text="senin"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sesi"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sesi"
+                android:layout_weight="1"
+                android:text="2"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mulai"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mulai"
+                android:layout_weight="1"
+                android:text="un"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Selesai"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/selesai"
+                android:layout_weight="1"
+                android:text="un"
                 />
         </LinearLayout>
 

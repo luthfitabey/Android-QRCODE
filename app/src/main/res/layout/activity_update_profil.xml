@@ -1,112 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="0dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Ubah Profil"
+                android:textColor="@color/grey"
+                android:id="@+id/toolbar_text" style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+        </android.support.v7.widget.Toolbar>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical">
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Angkatan"
+                android:id="@+id/pfangkatan"
+                android:inputType="phone" />
 
-        <TextView
-            android:id="@+id/contact_form_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="5dp"
-            android:text="Profil"
-            android:textColor="#ce3232"
-            android:textSize="40sp"
-            android:typeface="serif" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="Angkatan"
-            android:id="@+id/pfangkatan"
-            android:inputType="phone" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="Prodi"
-            android:id="@+id/pfprodi"
-            android:inputType="textPersonName" />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="NIF"
-            android:id="@+id/pfnif"
-            android:inputType="phone" />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="NIK"
-            android:id="@+id/pfnik"
-            android:inputType="phone" />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="NPWP"
-            android:id="@+id/pfnpwp"
-            android:inputType="phone" />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="nomor rekening"
-            android:id="@+id/pfnorek"
-            android:inputType="phone" />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="nama rekening"
-            android:id="@+id/pfnarek"
-            android:inputType="textPersonName" />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="nomor telepon"
-            android:id="@+id/pfnotelp"
-            android:inputType="phone" />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:gravity="top"
-            android:hint="Alamat"
-            android:id="@+id/pfalamat"
-            android:fitsSystemWindows="true"
-            android:breakStrategy="balanced"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:padding="5dp" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Prodi"
+                android:id="@+id/pfprodi"
+                android:inputType="textPersonName" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="NIF"
+                android:id="@+id/pfnif"
+                android:inputType="phone" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="NIK"
+                android:id="@+id/pfnik"
+                android:inputType="phone" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="NPWP"
+                android:id="@+id/pfnpwp"
+                android:inputType="phone" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="nomor rekening"
+                android:id="@+id/pfnorek"
+                android:inputType="phone" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="nama rekening"
+                android:id="@+id/pfnarek"
+                android:inputType="textPersonName" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="nomor telepon"
+                android:id="@+id/pfnotelp"
+                android:inputType="phone" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:gravity="top"
+                android:hint="Alamat"
+                android:id="@+id/pfalamat"
+                android:fitsSystemWindows="true"
+                android:breakStrategy="balanced"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:padding="5dp" />
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/colorPrimaryDark"
-            android:elevation="4dp"
-            android:paddingLeft="70dp"
-            android:paddingRight="70dp"
-            android:id="@+id/pfsave"
-            android:onClick="pfsave"
-            android:text="Save"
-            android:textColor="#fff" />
-    </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="4dp"
+                android:paddingLeft="70dp"
+                android:layout_marginTop="15dp"
+                android:paddingRight="70dp"
+                android:id="@+id/pfsave"
+                android:onClick="pfsave"
+                android:text="Save"
+                android:textColor="#fff" />
+        </LinearLayout>
+
+
+        </LinearLayout>
+
 </ScrollView>

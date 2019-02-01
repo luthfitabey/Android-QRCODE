@@ -1,13 +1,17 @@
 package com.anjilibey.qrcode.kelas;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import android.support.v7.widget.Toolbar;
 import com.anjilibey.qrcode.Adapter.JadwalAdapter;
 import com.anjilibey.qrcode.Adapter.MateriAdapter;
 import com.anjilibey.qrcode.Api.BaseApiService;
@@ -16,8 +20,7 @@ import com.anjilibey.qrcode.Api.UtilsApi;
 import com.anjilibey.qrcode.R;
 import com.anjilibey.qrcode.model.Jadwal;
 import com.anjilibey.qrcode.model.JadwalList;
-import com.anjilibey.qrcode.model.Materi;
-import com.anjilibey.qrcode.model.MateriList;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -32,7 +35,9 @@ public class JadwalActivity extends AppCompatActivity {
     private JadwalAdapter adapter;
     SharedPrefManager sharedPrefManager;
     String token;
-
+    Toolbar mActionBarToolbar;
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,24 @@ public class JadwalActivity extends AppCompatActivity {
 
         token = sharedPrefManager.getSpToken();
         Log.d("jadwal token", token);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TextView toolbarText = (TextView)
+                findViewById(R.id.toolbar_text);
+        if(toolbarText!=null && toolbar!=null) {
+            toolbarText.setText("Jadwal");
+            setSupportActionBar(toolbar);
+        }
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         getResultListJadwal();
     }
 
@@ -78,4 +101,5 @@ public class JadwalActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
     }
+
 }

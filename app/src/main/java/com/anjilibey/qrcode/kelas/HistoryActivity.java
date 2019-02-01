@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjilibey.qrcode.Adapter.DataAdapter;
@@ -39,6 +41,23 @@ public class HistoryActivity extends AppCompatActivity {
 
         token = sharedPrefManager.getSpToken();
         Log.d("history token", token);
+
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TextView toolbarText = (TextView)
+                findViewById(R.id.toolbar_text);
+        if(toolbarText!=null && toolbar!=null) {
+            toolbarText.setText("Riwayat Presensi");
+            setSupportActionBar(toolbar);
+        }
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         getResultListDosen();
     }
 

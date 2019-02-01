@@ -120,6 +120,13 @@ public class QrScanner extends AppCompatActivity implements Serializable{
                             Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(1000);
                             txtResult.setText(qrcodes.valueAt(0).displayValue);
+                            hasil = txtResult.getText().toString();
+                            if(!hasil.isEmpty()){
+                                Intent back = new Intent(QrScanner.this, AbsensiActivity.class);
+                                back.putExtra("hasil", hasil);
+                                startActivity(back);
+                                finish();
+                            }
                         }
                     });
                 }

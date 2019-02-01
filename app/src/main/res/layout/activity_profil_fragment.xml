@@ -288,17 +288,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:orientation="vertical">
+                android:layout_weight="1">
 
                 <Button
                     android:id="@+id/btnKeluar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
+                    android:layout_weight="1"
                     android:background="@drawable/rounded_button1"
-                    android:text="Keluar" />
-
+                    android:text="Log Out" />
+                <Button
+                    android:id="@+id/btnUbh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button"
+                    android:text="Ubah Password" />
             </LinearLayout>
+
 
         </LinearLayout>
 

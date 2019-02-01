@@ -34,6 +34,9 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder
         viewHolder.tv_kapasitas.setText(result.get(i).kapasitas);
         viewHolder.tv_sem.setText(result.get(i).paket_semester);
         viewHolder.tv_hari.setText(result.get(i).hari);
+        viewHolder.tv_sesi.setText(result.get(i).sesi);
+        viewHolder.tv_mulai.setText(result.get(i).waktu_mulai);
+        viewHolder.tv_selesai.setText(result.get(i).waktu_selesai);
 
     }
 
@@ -42,7 +45,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_nip, tv_matkul, tv_kode, tv_kelas, tv_kapasitas, tv_sem, tv_hari;
+        private TextView tv_nip, tv_matkul, tv_kode, tv_kelas, tv_kapasitas, tv_sem, tv_hari, tv_mulai, tv_selesai, tv_sesi;
         public ViewHolder(View view) {
             super(view);
 
@@ -53,6 +56,9 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder
             tv_kapasitas = (TextView)view.findViewById(R.id.jadKap);
             tv_sem = (TextView)view.findViewById(R.id.jadSem);
             tv_hari = (TextView)view.findViewById(R.id.jadHar);
+            tv_sesi = (TextView) view.findViewById(R.id.sesi);
+            tv_mulai = (TextView) view.findViewById(R.id.mulai);
+            tv_selesai = (TextView) view.findViewById(R.id.selesai);
 
         }
     }

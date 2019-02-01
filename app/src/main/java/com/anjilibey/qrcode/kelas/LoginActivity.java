@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         loading = ProgressDialog.show(LoginActivity.this, null, "Harap Tunggu...", true, false);
-        mApiService.loginRequest("396283", "1234567890")
+        mApiService.loginRequest(metNiu.getText().toString(),metPassword.getText().toString())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

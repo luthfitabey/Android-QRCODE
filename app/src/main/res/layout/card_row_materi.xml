@@ -48,15 +48,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tanggal                        :"
+                android:text="Tanggal"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/matTgl"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:text="20 april 2018"
                 />
         </LinearLayout>
@@ -65,15 +65,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NIP Dosen                    :"
+                android:text="Hari"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/matNip"
-                android:layout_weight="10"
+                android:id="@+id/matHari"
+                android:layout_weight="1"
                 android:text="745353894"
                 />
         </LinearLayout>
@@ -82,15 +82,32 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Capaian                        :"
+                android:text="Ruang"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/matRuang"
+                android:layout_weight="1"
+                android:text="745353894"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capaian"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/matCap"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:text="70%"
                 />
         </LinearLayout>
@@ -99,15 +116,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kesesuaian RKPS        :"
+                android:text="Kesesuaian RKPS"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/matKes"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:text="sesuai"
                 />
         </LinearLayout>
@@ -116,15 +133,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Keterangan                  :"
+                android:text="Keterangan"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/matKet"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:text="10496" />
 
         </LinearLayout>
@@ -134,15 +151,15 @@
             android:layout_weight="1"
             android:layout_marginBottom="10dp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Materi                            :"
+                android:text="Materi"
                 android:layout_weight="1"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/matMat"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:autoLink="web"
                 android:text="anu.com" />
 

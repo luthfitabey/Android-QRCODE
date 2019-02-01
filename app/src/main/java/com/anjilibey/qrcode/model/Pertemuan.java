@@ -8,37 +8,42 @@ public class Pertemuan {
     public String values;
     @SerializedName("id")
     public String id;
-    @SerializedName("capaian")
-    public String capaian;
+    @SerializedName("id_jadwal")
+    public String id_jadwal;
+
+    public String getNip_dosen() {
+        return nip_dosen;
+    }
+
+    public void setNip_dosen(String nip_dosen) {
+        this.nip_dosen = nip_dosen;
+    }
+
+    //    @SerializedName("id_pegawai")
+//    public String id_pegawai;
+    @SerializedName("nip_dosen")
+    public String nip_dosen;
     @SerializedName("kesesuaian_rkps")
     public String kesesuaian_rkps;
-    @SerializedName("materi")
-    public String materi;
-    @SerializedName("keterangan")
-    public String keterangan;
+    @SerializedName("capaian")
+    public String capaian;
     @SerializedName("tanggal")
     public String tanggal;
     @SerializedName("waktu_selesai")
     public String waktu_selesai;
-
-    public String getWaktu_mulai() {
-        return waktu_mulai;
-    }
-
-    public void setWaktu_mulai(String waktu_mulai) {
-        this.waktu_mulai = waktu_mulai;
-    }
-
     @SerializedName("waktu_mulai")
     public String waktu_mulai;
+    @SerializedName("keterangan")
+    public String keterangan;
+    @SerializedName("materi")
+    public String materi;
     @SerializedName("created_at")
     public String created_at;
     @SerializedName("updated_at")
     public String updated_at;
-    @SerializedName("id_jadwal")
-    public String id_jadwal;
-    @SerializedName("nip_dosen")
-    public String nip_dosen;
+
+
+
     public String getValues() {
         return values;
     }
@@ -127,15 +132,20 @@ public class Pertemuan {
         this.id_jadwal = id_jadwal;
     }
 
-    public String getNip_dosen() {
-        return nip_dosen;
+    public String getWaktu_mulai() {
+        return waktu_mulai;
     }
 
-    public void setNip_dosen(String nip_dosen) {
-        this.nip_dosen = nip_dosen;
+    public void setWaktu_mulai(String waktu_mulai) {
+        this.waktu_mulai = waktu_mulai;
     }
 
-
-
+//    public String getId_pegawai() {
+//        return id_pegawai;
+//    }
+//
+//    public void setId_pegawai(String id_pegawai) {
+//        this.id_pegawai = id_pegawai;
+//    }
 
 }

@@ -31,6 +31,12 @@ public class Jadwal {
     public String id_sesi;
     @SerializedName("id_ruang")
     public String id_ruang;
+    @SerializedName("sesi")
+    public String sesi;
+    @SerializedName("waktu_mulai")
+    public String waktu_mulai;
+    @SerializedName("waktu_selesai")
+    public String waktu_selesai;
 
     public String getId() {
         return id;
@@ -143,4 +149,29 @@ public class Jadwal {
     public void setId_ruang(String id_ruang) {
         this.id_ruang = id_ruang;
     }
+
+    public String getSesi() {
+        return sesi;
+    }
+
+    public void setSesi(String sesi) {
+        this.sesi = sesi;
+    }
+
+    public String getWaktu_mulai() {
+        return waktu_mulai;
+    }
+
+    public void setWaktu_mulai(String waktu_mulai) {
+        this.waktu_mulai = waktu_mulai;
+    }
+
+    public String getWaktu_selesai() {
+        return waktu_selesai;
+    }
+
+    public void setWaktu_selesai(String waktu_selesai) {
+        this.waktu_selesai = waktu_selesai;
+    }
+
 }

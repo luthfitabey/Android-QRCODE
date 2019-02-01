@@ -2,6 +2,9 @@ package com.anjilibey.qrcode.Api;
 
 import com.anjilibey.qrcode.model.JadwalList;
 import com.anjilibey.qrcode.model.HistoryList;
+import com.anjilibey.qrcode.model.Kelas;
+import com.anjilibey.qrcode.model.KelasList;
+import com.anjilibey.qrcode.model.Materi;
 import com.anjilibey.qrcode.model.MateriList;
 import com.anjilibey.qrcode.model.Pertemuans;
 import com.anjilibey.qrcode.model.Profiles;
@@ -14,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface BaseApiService {
@@ -25,7 +29,7 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("/api/login")
     Call<ResponseBody> loginRequest(
-            @Field("niu") String niu,
+            @Field("username") String username,
             @Field("password") String password
     );
 
@@ -86,13 +90,13 @@ public interface BaseApiService {
     Call<Profiles> getProfil(@Header("Authorization") String Authorization);
 
     //materi with search
-    @Headers({
-            "Accept:application/json",
-            "content-type:application/json"
-//            "Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU2MGJiMzU1OThmYjNhMzlhOGY4NWFmYTY5MDAxODM5NTdjYWFlNGJlMzc5Y2U3MTFkN2IwZmRlZGM0NTk4MTQ1NWIwN2RjNTFkNDQ1MWFiIn0.eyJhdWQiOiIxIiwianRpIjoiNTYwYmIzNTU5OGZiM2EzOWE4Zjg1YWZhNjkwMDE4Mzk1N2NhYWU0YmUzNzljZTcxMWQ3YjBmZGVkYzQ1OTgxNDU1YjA3ZGM1MWQ0NDUxYWIiLCJpYXQiOjE1NDgxMjU2NzAsIm5iZiI6MTU0ODEyNTY3MCwiZXhwIjoxNTc5NjYxNjcwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.FbarxS54wJQeErkdUgGVhAM2i7vZnmZ-GTmeqHiieZ8ISv-ET4XqKVGZp399qDehtDaKTqyNcoaJNAv_C8cLr1EBJXu-lN-p8I65x6Q0W5v2MvNC13I-mZ5wbBxVjjzW8AqMm_ZNxZQY3ozsYqYKzlGuOpm6YY8KPAOd5wpuod6FhpbSrlx_p4823B28vSTqJ6p3QQ6mAijO281lpzm7COpv8V3HMbc1alRWLZT_T_vi7adxXyxy41BAoAcZyWqkI_SAP2ZpHoNXPFjKah6fyVbvC2hIDNcBWfZW1DHm-923kM5vx2dcqRLgzHx-pa-jqrm8IQxf_ZBb57Mhrs_JPcr89sfRq0z6Y77pMt9VTMycOV-S_DQqnsfeBaBduOZkym6koq3oS3YbwyrmhWd7hPr3s6jr3GaKb_kfFXNML59kTLpKiKKBMTlbP3WTQDBUIbKRhZtZk9SVTG5pfBYTGW7E-Xs1HNkUfYqDdM6XSUJwwdR-CrVoMCHMvpX1SPIfwGmre3o9bVko2xfrd6sm-mER9aucnymyVU1vGjLoe_rQbcjAtoB1RJGa4BW88R2m9ie0eF17aaLkCpo8WoN2pK0p1y4ejERvHG9k_i8JHSXINkQjtbfPP3RJa8rDDW3qfmG2CGx0yb7FolmWXB9UZ5XbNLZw91J1dKlo4Dq1Yww"
-    })
-    @GET("/api/materi")
-    Call<MateriList> getMateri(@Header("Authorization") String Authorization);
+//    @Headers({
+//            "Accept:application/json",
+//            "content-type:application/json"
+////            "Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU2MGJiMzU1OThmYjNhMzlhOGY4NWFmYTY5MDAxODM5NTdjYWFlNGJlMzc5Y2U3MTFkN2IwZmRlZGM0NTk4MTQ1NWIwN2RjNTFkNDQ1MWFiIn0.eyJhdWQiOiIxIiwianRpIjoiNTYwYmIzNTU5OGZiM2EzOWE4Zjg1YWZhNjkwMDE4Mzk1N2NhYWU0YmUzNzljZTcxMWQ3YjBmZGVkYzQ1OTgxNDU1YjA3ZGM1MWQ0NDUxYWIiLCJpYXQiOjE1NDgxMjU2NzAsIm5iZiI6MTU0ODEyNTY3MCwiZXhwIjoxNTc5NjYxNjcwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.FbarxS54wJQeErkdUgGVhAM2i7vZnmZ-GTmeqHiieZ8ISv-ET4XqKVGZp399qDehtDaKTqyNcoaJNAv_C8cLr1EBJXu-lN-p8I65x6Q0W5v2MvNC13I-mZ5wbBxVjjzW8AqMm_ZNxZQY3ozsYqYKzlGuOpm6YY8KPAOd5wpuod6FhpbSrlx_p4823B28vSTqJ6p3QQ6mAijO281lpzm7COpv8V3HMbc1alRWLZT_T_vi7adxXyxy41BAoAcZyWqkI_SAP2ZpHoNXPFjKah6fyVbvC2hIDNcBWfZW1DHm-923kM5vx2dcqRLgzHx-pa-jqrm8IQxf_ZBb57Mhrs_JPcr89sfRq0z6Y77pMt9VTMycOV-S_DQqnsfeBaBduOZkym6koq3oS3YbwyrmhWd7hPr3s6jr3GaKb_kfFXNML59kTLpKiKKBMTlbP3WTQDBUIbKRhZtZk9SVTG5pfBYTGW7E-Xs1HNkUfYqDdM6XSUJwwdR-CrVoMCHMvpX1SPIfwGmre3o9bVko2xfrd6sm-mER9aucnymyVU1vGjLoe_rQbcjAtoB1RJGa4BW88R2m9ie0eF17aaLkCpo8WoN2pK0p1y4ejERvHG9k_i8JHSXINkQjtbfPP3RJa8rDDW3qfmG2CGx0yb7FolmWXB9UZ5XbNLZw91J1dKlo4Dq1Yww"
+//    })
+//    @GET("/api/materi")
+//    Call<MateriList> getMateri(@Header("Authorization") String Authorization);
 
     //jadwal
     @Headers({
@@ -109,4 +113,29 @@ public interface BaseApiService {
     })
     @GET("/api/pertemuan/{id}")
     Call<Pertemuans> getPertemuan(@Header("Authorization") String Authorization, @Path("id") String id);
+
+    @Headers({
+            "content-type:application/json"
+//            "Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU2MGJiMzU1OThmYjNhMzlhOGY4NWFmYTY5MDAxODM5NTdjYWFlNGJlMzc5Y2U3MTFkN2IwZmRlZGM0NTk4MTQ1NWIwN2RjNTFkNDQ1MWFiIn0.eyJhdWQiOiIxIiwianRpIjoiNTYwYmIzNTU5OGZiM2EzOWE4Zjg1YWZhNjkwMDE4Mzk1N2NhYWU0YmUzNzljZTcxMWQ3YjBmZGVkYzQ1OTgxNDU1YjA3ZGM1MWQ0NDUxYWIiLCJpYXQiOjE1NDgxMjU2NzAsIm5iZiI6MTU0ODEyNTY3MCwiZXhwIjoxNTc5NjYxNjcwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.FbarxS54wJQeErkdUgGVhAM2i7vZnmZ-GTmeqHiieZ8ISv-ET4XqKVGZp399qDehtDaKTqyNcoaJNAv_C8cLr1EBJXu-lN-p8I65x6Q0W5v2MvNC13I-mZ5wbBxVjjzW8AqMm_ZNxZQY3ozsYqYKzlGuOpm6YY8KPAOd5wpuod6FhpbSrlx_p4823B28vSTqJ6p3QQ6mAijO281lpzm7COpv8V3HMbc1alRWLZT_T_vi7adxXyxy41BAoAcZyWqkI_SAP2ZpHoNXPFjKah6fyVbvC2hIDNcBWfZW1DHm-923kM5vx2dcqRLgzHx-pa-jqrm8IQxf_ZBb57Mhrs_JPcr89sfRq0z6Y77pMt9VTMycOV-S_DQqnsfeBaBduOZkym6koq3oS3YbwyrmhWd7hPr3s6jr3GaKb_kfFXNML59kTLpKiKKBMTlbP3WTQDBUIbKRhZtZk9SVTG5pfBYTGW7E-Xs1HNkUfYqDdM6XSUJwwdR-CrVoMCHMvpX1SPIfwGmre3o9bVko2xfrd6sm-mER9aucnymyVU1vGjLoe_rQbcjAtoB1RJGa4BW88R2m9ie0eF17aaLkCpo8WoN2pK0p1y4ejERvHG9k_i8JHSXINkQjtbfPP3RJa8rDDW3qfmG2CGx0yb7FolmWXB9UZ5XbNLZw91J1dKlo4Dq1Yww"
+    })
+    @FormUrlEncoded
+    @POST("/api/user/{id}")
+    Call<ResponseBody> userRequest(@Header("Accept") String Accept,@Header("Authorization") String Authorization, @Path("id") String id, @Field("password") String password);
+
+
+    @Headers({
+            "Accept:application/json",
+            "content-type:application/json"
+//            "Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU2MGJiMzU1OThmYjNhMzlhOGY4NWFmYTY5MDAxODM5NTdjYWFlNGJlMzc5Y2U3MTFkN2IwZmRlZGM0NTk4MTQ1NWIwN2RjNTFkNDQ1MWFiIn0.eyJhdWQiOiIxIiwianRpIjoiNTYwYmIzNTU5OGZiM2EzOWE4Zjg1YWZhNjkwMDE4Mzk1N2NhYWU0YmUzNzljZTcxMWQ3YjBmZGVkYzQ1OTgxNDU1YjA3ZGM1MWQ0NDUxYWIiLCJpYXQiOjE1NDgxMjU2NzAsIm5iZiI6MTU0ODEyNTY3MCwiZXhwIjoxNTc5NjYxNjcwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.FbarxS54wJQeErkdUgGVhAM2i7vZnmZ-GTmeqHiieZ8ISv-ET4XqKVGZp399qDehtDaKTqyNcoaJNAv_C8cLr1EBJXu-lN-p8I65x6Q0W5v2MvNC13I-mZ5wbBxVjjzW8AqMm_ZNxZQY3ozsYqYKzlGuOpm6YY8KPAOd5wpuod6FhpbSrlx_p4823B28vSTqJ6p3QQ6mAijO281lpzm7COpv8V3HMbc1alRWLZT_T_vi7adxXyxy41BAoAcZyWqkI_SAP2ZpHoNXPFjKah6fyVbvC2hIDNcBWfZW1DHm-923kM5vx2dcqRLgzHx-pa-jqrm8IQxf_ZBb57Mhrs_JPcr89sfRq0z6Y77pMt9VTMycOV-S_DQqnsfeBaBduOZkym6koq3oS3YbwyrmhWd7hPr3s6jr3GaKb_kfFXNML59kTLpKiKKBMTlbP3WTQDBUIbKRhZtZk9SVTG5pfBYTGW7E-Xs1HNkUfYqDdM6XSUJwwdR-CrVoMCHMvpX1SPIfwGmre3o9bVko2xfrd6sm-mER9aucnymyVU1vGjLoe_rQbcjAtoB1RJGa4BW88R2m9ie0eF17aaLkCpo8WoN2pK0p1y4ejERvHG9k_i8JHSXINkQjtbfPP3RJa8rDDW3qfmG2CGx0yb7FolmWXB9UZ5XbNLZw91J1dKlo4Dq1Yww"
+    })
+    @GET("/api/materi")
+    Call<KelasList> getKelas(@Header("Authorization") String Authorization);
+
+    @Headers({
+        "Accept:application/json",
+        "content-type:application/json"
+//            "Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU2MGJiMzU1OThmYjNhMzlhOGY4NWFmYTY5MDAxODM5NTdjYWFlNGJlMzc5Y2U3MTFkN2IwZmRlZGM0NTk4MTQ1NWIwN2RjNTFkNDQ1MWFiIn0.eyJhdWQiOiIxIiwianRpIjoiNTYwYmIzNTU5OGZiM2EzOWE4Zjg1YWZhNjkwMDE4Mzk1N2NhYWU0YmUzNzljZTcxMWQ3YjBmZGVkYzQ1OTgxNDU1YjA3ZGM1MWQ0NDUxYWIiLCJpYXQiOjE1NDgxMjU2NzAsIm5iZiI6MTU0ODEyNTY3MCwiZXhwIjoxNTc5NjYxNjcwLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.FbarxS54wJQeErkdUgGVhAM2i7vZnmZ-GTmeqHiieZ8ISv-ET4XqKVGZp399qDehtDaKTqyNcoaJNAv_C8cLr1EBJXu-lN-p8I65x6Q0W5v2MvNC13I-mZ5wbBxVjjzW8AqMm_ZNxZQY3ozsYqYKzlGuOpm6YY8KPAOd5wpuod6FhpbSrlx_p4823B28vSTqJ6p3QQ6mAijO281lpzm7COpv8V3HMbc1alRWLZT_T_vi7adxXyxy41BAoAcZyWqkI_SAP2ZpHoNXPFjKah6fyVbvC2hIDNcBWfZW1DHm-923kM5vx2dcqRLgzHx-pa-jqrm8IQxf_ZBb57Mhrs_JPcr89sfRq0z6Y77pMt9VTMycOV-S_DQqnsfeBaBduOZkym6koq3oS3YbwyrmhWd7hPr3s6jr3GaKb_kfFXNML59kTLpKiKKBMTlbP3WTQDBUIbKRhZtZk9SVTG5pfBYTGW7E-Xs1HNkUfYqDdM6XSUJwwdR-CrVoMCHMvpX1SPIfwGmre3o9bVko2xfrd6sm-mER9aucnymyVU1vGjLoe_rQbcjAtoB1RJGa4BW88R2m9ie0eF17aaLkCpo8WoN2pK0p1y4ejERvHG9k_i8JHSXINkQjtbfPP3RJa8rDDW3qfmG2CGx0yb7FolmWXB9UZ5XbNLZw91J1dKlo4Dq1Yww"
+    })
+    @GET("/api/materiId/{id}")
+    Call<MateriList> getMateri(@Header("Authorization") String Authorization, @Path("id") String id);
 }

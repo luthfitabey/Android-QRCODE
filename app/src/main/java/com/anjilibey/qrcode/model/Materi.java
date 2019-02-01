@@ -5,28 +5,38 @@ import com.google.gson.annotations.SerializedName;
 public class Materi {
     @SerializedName("id")
     public String id;
-    @SerializedName("capaian")
-    public String capaian;
+    @SerializedName("id_jdwl")
+    public String id_jdwl;
+    @SerializedName("id_pegawai")
+    public String id_pegawai;
     @SerializedName("kesesuaian_rkps")
     public String kesesuaian_rkps;
-    @SerializedName("materi")
-    public String materi;
-    @SerializedName("keterangan")
-    public String keterangan;
+    @SerializedName("capaian")
+    public String capaian;
     @SerializedName("tanggal")
     public String tanggal;
     @SerializedName("waktu_mulai")
     public String waktu_mulai;
     @SerializedName("waktu_selesai")
     public String waktu_selesai;
+    @SerializedName("keterangan")
+    public String keterangan;
+    @SerializedName("materi")
+    public String materi;
     @SerializedName("created_at")
     public String created_at;
     @SerializedName("updated_at")
     public String updated_at;
     @SerializedName("id_jadwal")
     public String id_jadwal;
-    @SerializedName("nip_dosen")
-    public String nip_dosen;
+    @SerializedName("hari")
+    public String hari;
+    @SerializedName("id_kls")
+    public String id_kls;
+    @SerializedName("id_sesi")
+    public String id_sesi;
+    @SerializedName("id_ruang")
+    public String id_ruang;
     public String getId() {
         return id;
     }
@@ -35,12 +45,52 @@ public class Materi {
         this.id = id;
     }
 
-    public String getCapaian() {
-        return capaian;
+    public String getId_jadwal() {
+        return id_jadwal;
     }
 
-    public void setCapaian(String capaian) {
-        this.capaian = capaian;
+    public void setId_jadwal(String id_jadwal) {
+        this.id_jadwal = id_jadwal;
+    }
+
+    public String getHari() {
+        return hari;
+    }
+
+    public void setHari(String hari) {
+        this.hari = hari;
+    }
+
+    public String getId_kls() {
+        return id_kls;
+    }
+
+    public void setId_kls(String id_kls) {
+        this.id_kls = id_kls;
+    }
+
+    public String getId_sesi() {
+        return id_sesi;
+    }
+
+    public void setId_sesi(String id_sesi) {
+        this.id_sesi = id_sesi;
+    }
+
+    public String getId_ruang() {
+        return id_ruang;
+    }
+
+    public void setId_ruang(String id_ruang) {
+        this.id_ruang = id_ruang;
+    }
+
+    public String getId_pegawai() {
+        return id_pegawai;
+    }
+
+    public void setId_pegawai(String id_pegawai) {
+        this.id_pegawai = id_pegawai;
     }
 
     public String getKesesuaian_rkps() {
@@ -51,20 +101,12 @@ public class Materi {
         this.kesesuaian_rkps = kesesuaian_rkps;
     }
 
-    public String getMateri() {
-        return materi;
+    public String getCapaian() {
+        return capaian;
     }
 
-    public void setMateri(String materi) {
-        this.materi = materi;
-    }
-
-    public String getKeterangan() {
-        return keterangan;
-    }
-
-    public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
+    public void setCapaian(String capaian) {
+        this.capaian = capaian;
     }
 
     public String getTanggal() {
@@ -91,6 +133,22 @@ public class Materi {
         this.waktu_selesai = waktu_selesai;
     }
 
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
+    public String getMateri() {
+        return materi;
+    }
+
+    public void setMateri(String materi) {
+        this.materi = materi;
+    }
+
     public String getCreated_at() {
         return created_at;
     }
@@ -107,21 +165,7 @@ public class Materi {
         this.updated_at = updated_at;
     }
 
-    public String getId_jadwal() {
-        return id_jadwal;
-    }
 
-    public void setId_jadwal(String id_jadwal) {
-        this.id_jadwal = id_jadwal;
-    }
-
-    public String getNip_dosen() {
-        return nip_dosen;
-    }
-
-    public void setNip_dosen(String nip_dosen) {
-        this.nip_dosen = nip_dosen;
-    }
 
 
 }

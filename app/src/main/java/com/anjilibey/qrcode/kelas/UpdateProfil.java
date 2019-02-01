@@ -2,9 +2,11 @@ package com.anjilibey.qrcode.kelas;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjilibey.qrcode.Api.BaseApiService;
@@ -47,6 +49,23 @@ public class UpdateProfil extends AppCompatActivity implements Serializable {
 
         token = sharedPrefManager.getSpToken();
         Log.d("token dari shared", token);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TextView toolbarText = (TextView)
+                findViewById(R.id.toolbar_text);
+        if(toolbarText!=null && toolbar!=null) {
+            toolbarText.setText("Isi Profil");
+            setSupportActionBar(toolbar);
+        }
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void pfsave(View view) {
