@@ -1,11 +1,14 @@
 package com.anjilibey.qrcode.Api;
 
+import com.anjilibey.qrcode.model.Cek;
+import com.anjilibey.qrcode.model.CekList;
 import com.anjilibey.qrcode.model.JadwalList;
 import com.anjilibey.qrcode.model.HistoryList;
 import com.anjilibey.qrcode.model.Kelas;
 import com.anjilibey.qrcode.model.KelasList;
 import com.anjilibey.qrcode.model.Materi;
 import com.anjilibey.qrcode.model.MateriList;
+import com.anjilibey.qrcode.model.PertemuanIds;
 import com.anjilibey.qrcode.model.Pertemuans;
 import com.anjilibey.qrcode.model.Profiles;
 
@@ -138,4 +141,39 @@ public interface BaseApiService {
     })
     @GET("/api/materiId/{id}")
     Call<MateriList> getMateri(@Header("Authorization") String Authorization, @Path("id") String id);
+
+
+    @Headers({
+            "Accept:application/json"
+    })
+    @FormUrlEncoded
+    @POST("/api/detailPertemuan/{id}")
+    Call<ResponseBody> updateDetail(@Header("Authorization") String Authorization,
+                                   @Path("id") String id,
+                                   @Field("rating") String rating,
+                                   @Field("komentar") String komentar);
+
+
+    @Headers({
+            "Accept:application/json",
+            "content-type:application/json"
+    })
+    @GET("/api/ShowUpdatePertemuan/{id}")
+    Call<PertemuanIds> showPertemuan(@Header("Authorization") String Authorization, @Path("id") String id);
+
+    //cek rating
+    @Headers({
+            "Accept:application/json",
+            "content-type:application/json"
+    })
+    @GET("/api/cek")
+    Call<CekList> cekRating(@Header("Authorization") String Authorization);
+
+    @Headers({
+            "Accept:application/json",
+            "content-type:application/json"
+    })
+    @GET("/api/detail/{id}")
+    Call<HistoryList> showDetail(@Header("Authorization") String Authorization, @Path("id") String id);
+
 }

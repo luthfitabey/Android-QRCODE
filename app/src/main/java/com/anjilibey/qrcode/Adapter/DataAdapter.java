@@ -1,14 +1,19 @@
 package com.anjilibey.qrcode.Adapter;
 
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.anjilibey.qrcode.R;
+import com.anjilibey.qrcode.kelas.MateriActivity;
+import com.anjilibey.qrcode.kelas.UpdateDetailP;
 import com.anjilibey.qrcode.model.History;
-import com.anjilibey.qrcode.model.Materi;
+import com.google.android.gms.nearby.messages.internal.Update;
+
 
 import java.util.ArrayList;
 
@@ -34,6 +39,25 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         viewHolder.tv_imei.setText(result.get(i).rating);
         viewHolder.tv_dosen.setText(result.get(i).komentar);
         viewHolder.tv_id.setText(result.get(i).id_mhs);
+
+        final String idDetail = result.get(i).getId();
+        final String rating = result.get(i).getRating();
+        final String komentar = result.get(i).getKomentar();
+        final String tanggal = result.get(i).getCreated_at();
+        final String idPertemuan = result.get(i).getId_pertemuan();
+        Log.d("idPertemuan", idPertemuan);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mIntent = new Intent(view.getContext(), UpdateDetailP.class);
+                mIntent.putExtra("idDetail", idDetail);
+                mIntent.putExtra("rating", rating);
+                mIntent.putExtra("komentar", komentar);
+                mIntent.putExtra("tanggal", tanggal);
+                mIntent.putExtra("idPertemuan", idPertemuan);
+                view.getContext().startActivity(mIntent);
+            }
+        });
     }
 
  public int getItemCount(){

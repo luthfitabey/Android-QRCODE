@@ -84,7 +84,7 @@ public class MateriActivity extends AppCompatActivity {
                     generateMateriList(response.body().getMateriArrayList());
                 } else {
                     loading.dismiss();
-                    Toast.makeText(MateriActivity.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MateriActivity.this, "Belum ada data pertemuan", Toast.LENGTH_SHORT).show();
                 }
             }
 

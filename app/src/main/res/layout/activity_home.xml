@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:text="ABSENSI MAHASISWA"
+            android:text="PRESENSI MAHASISWA"
             android:textSize="23sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>

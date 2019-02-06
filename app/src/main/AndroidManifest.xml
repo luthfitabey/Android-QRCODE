@@ -37,7 +37,9 @@
         <activity android:name=".kelas.UpdateProfil" />
         <activity android:name=".kelas.Dashboard" />
         <activity android:name=".kelas.UbahPass" />
-        <activity android:name=".kelas.KelasActivity"></activity>
+        <activity android:name=".kelas.KelasActivity" />
+        <activity android:name=".kelas.UpdateDetailP" />
+        <activity android:name=".kelas.RatingActivity"></activity>
     </application>
 
 </manifest>

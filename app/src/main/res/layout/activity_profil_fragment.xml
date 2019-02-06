@@ -40,7 +40,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8sp"
             android:fontFamily="sans-serif-light"
-            android:text="Luthfi Areta A"
+            android:text="U.N"
             android:textColor="@color/white"
             android:textSize="23sp" />
 
@@ -52,7 +52,7 @@
             android:layout_below="@+id/tv_name"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
-            android:text="Yogyakarta"
+            android:text=""
             android:textAllCaps="true"
             android:textColor="@color/address"
             android:textSize="13sp" />
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="396283"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Komsi"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
@@ -188,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="16"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
@@ -218,7 +218,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="+6285733332284"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -248,7 +248,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="34248298402"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -278,7 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="10496"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 

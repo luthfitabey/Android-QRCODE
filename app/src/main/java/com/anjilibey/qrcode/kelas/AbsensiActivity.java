@@ -2,12 +2,13 @@ package com.anjilibey.qrcode.kelas;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +21,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import com.anjilibey.qrcode.Api.BaseApiService;
 import com.anjilibey.qrcode.Api.SharedPrefManager;
 import com.anjilibey.qrcode.Api.UtilsApi;
@@ -45,9 +44,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.anjilibey.qrcode.Api.UtilsApi.BASE_URL_API;
+
 public class AbsensiActivity extends AppCompatActivity {
     BaseApiService mApiService;
-    TextView mid, mcapaian, mkesesuaian, mmateri, mketerangan, mwaktum, mwaktus, mniu, mnama, mprodi, mangakatan, mnip, mRatingScale, mLink;
+    TextView mid, mcapaian, mkesesuaian, mmateri, mketerangan, mwaktum, mwaktus, mniu, mnama, mprodi, mangakatan, mRatingScale, mLink;
     TelephonyManager tm;
     String ratingan, hasil, token;
     static String imei;
@@ -55,6 +56,7 @@ public class AbsensiActivity extends AppCompatActivity {
     EditText mFeedback;
     Button mSendFeedback;
     SharedPrefManager sharedPrefManager;
+    String base_url = BASE_URL_API;
 
     @SuppressLint({"HardwareIds", "MissingPermission"})
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +146,7 @@ public class AbsensiActivity extends AppCompatActivity {
         getResultPertemuan();
 
 //      api get untuk asynctask
-        String url = "http://10.203.253.239:8000/api/profile";
+        String url = base_url+"/api/profile";
         FetchData fetchData = new FetchData();
         fetchData.execute(url);
 
@@ -167,11 +169,12 @@ public class AbsensiActivity extends AppCompatActivity {
                         mwaktum.setText(data.getWaktu_mulai());
                         mwaktus.setText(data.getWaktu_selesai());
                         mLink.setText(data.getMateri());
-//                        mnip.setText(data.get());
                     }
                 }
                 else {
                     loading.dismiss();
+                    Intent intent = new Intent(AbsensiActivity.this, QrScanner.class);
+                    startActivity(intent);
                     Log.d("hasilnya: ", "gagal");
                 }
             }
@@ -187,7 +190,6 @@ public class AbsensiActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             String result = null;
-
             try {
                 URL url = new URL(strings[0]);
                 HttpURLConnection connection =
@@ -263,38 +265,89 @@ public class AbsensiActivity extends AppCompatActivity {
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            // for ActivityCompat#requestPermissions for more Details.
             return;
         }
         imei = tm.getDeviceId();
 
-        if (mFeedback.getText().toString().isEmpty()) {
-            Toast.makeText(AbsensiActivity.this, "Pastikan anda telah menuliskan komentar dan melekukan rating", Toast.LENGTH_LONG).show();
+        if (mFeedback.getText().toString().isEmpty() || ratingan == null) {
+            showAlertDialogButtonClicked();
         } else {
-            mApiService.detailRequest(
-                    "Application/json",
-                    "Bearer " + token,
-                    ratingan,
-                    mFeedback.getText().toString(),
-                    imei,
-                    mid.getText().toString()
-            ).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(AbsensiActivity.this, "Berhasil Disimpan, Terimakasih atas feedback anda", Toast.LENGTH_SHORT).show();
-                        mFeedback.setText("");
-                        mRatingBar.setRating(0);
-                    } else
-                        Toast.makeText(AbsensiActivity.this, "Gagal Disimpan, pastikan anda tidak melakukan presensi di handphone teman anda", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.e("debug", "onFailure: ERROR > " + t.getMessage());
-                    Toast.makeText(AbsensiActivity.this, "Koneksi Internet Bermasalah", Toast.LENGTH_SHORT).show();
-                }
-            });
+            submitUser();
         }
+    }
+
+    private void showAlertDialogButtonClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Peringatan !");
+        builder.setMessage("Anda belum mengisi kolom rating dan komentar, jika anda memilih untuk melanjutkan maka rating dan komentar adalah null \n\n**Anda juga dapat melakukan update kolom rating dan komentar melalui riwayat presensi");
+
+        // add the buttons
+        builder.setPositiveButton("Lanjutkan", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                submitDefault();
+            }
+        });
+        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void submitDefault(){
+        mApiService.detailRequest(
+                "Application/json",
+                "Bearer " + token,
+                "",
+                "",
+                imei,
+                mid.getText().toString()
+        ).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(AbsensiActivity.this, "Berhasil Disimpan, Terimakasih atas feedback anda", Toast.LENGTH_SHORT).show();
+                    mFeedback.setText("");
+                    mRatingBar.setRating(0);
+                } else
+                    Toast.makeText(AbsensiActivity.this, "Gagal Disimpan, pastikan anda tidak melakukan presensi di handphone teman anda", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                Toast.makeText(AbsensiActivity.this, "Koneksi Internet Bermasalah", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void submitUser(){
+        mApiService.detailRequest(
+                "Application/json",
+                "Bearer " + token,
+                ratingan,
+                mFeedback.getText().toString(),
+                imei,
+                mid.getText().toString()
+        ).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(AbsensiActivity.this, "Berhasil Disimpan, Terimakasih atas feedback anda", Toast.LENGTH_SHORT).show();
+                    mFeedback.setText("");
+                    mRatingBar.setRating(0);
+                } else
+                    Toast.makeText(AbsensiActivity.this, "Gagal Disimpan, pastikan anda tidak melakukan presensi di handphone teman anda", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                Toast.makeText(AbsensiActivity.this, "Koneksi Internet Bermasalah", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

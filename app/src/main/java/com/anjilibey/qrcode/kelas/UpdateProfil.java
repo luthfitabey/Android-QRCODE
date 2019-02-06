@@ -69,34 +69,6 @@ public class UpdateProfil extends AppCompatActivity implements Serializable {
     }
 
     public void pfsave(View view) {
-//        mApiService.profilRequest(
-//                metnif.getText().toString(),
-//                metangkatan.getText().toString(),
-//                metprodi.getText().toString(),
-//                metnik.getText().toString(),
-//                metalamat.getText().toString(),
-//                metnorek.getText().toString(),
-//                metnarek.getText().toString(),
-//                metnpwp.getText().toString(),
-//                metnotelp.getText().toString())
-//                .enqueue(new Callback<ResponseBody>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                        if (response.isSuccessful()) {
-//                            Toast.makeText(UpdateProfil.this, "Berhasil Disimpan", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(UpdateProfil.this, ProfilFragment.class);
-//                            startActivity(intent);
-//                        } else
-//                            Toast.makeText(UpdateProfil.this, "Gagal Disimpan", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                        Log.e("debug", "onFailure: ERROR > " + t.getMessage());
-//                        Toast.makeText(UpdateProfil.this, "Koneksi Internet Bermasalah", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-
         mApiService.profilRequest(
                 "Application/json",
                 "Bearer "+token,

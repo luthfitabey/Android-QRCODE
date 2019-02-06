@@ -28,7 +28,7 @@ View v;
                 .setImage(R.drawable.ugm_baru)
                 .addItem(new Element().setTitle("Version 1.0"))
                 .addItem(adsElement)
-                .setDescription("Aplikasi absensi untuk mahasiswa sekolah vokasi UGM")
+                .setDescription("Aplikasi presensi untuk mahasiswa Sekolah Vokasi UGM")
                 .addGroup("Connect with us")
                 .addEmail("anjilibey@gmail.com")
                 .addWebsite("http://sv.ugm.ac.id")

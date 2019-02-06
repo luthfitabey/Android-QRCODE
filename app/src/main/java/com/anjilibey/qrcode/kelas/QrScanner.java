@@ -9,14 +9,22 @@ import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.anjilibey.qrcode.Api.BaseApiService;
+import com.anjilibey.qrcode.Api.SharedPrefManager;
+import com.anjilibey.qrcode.Api.UtilsApi;
 import com.anjilibey.qrcode.R;
+import com.anjilibey.qrcode.model.Cek;
+import com.anjilibey.qrcode.model.CekList;
+import com.anjilibey.qrcode.model.Pertemuan;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -24,6 +32,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QrScanner extends AppCompatActivity implements Serializable{
 
@@ -33,8 +47,9 @@ public class QrScanner extends AppCompatActivity implements Serializable{
     CameraSource cameraSource;
     EditText metHasil;
     final int RequestCameraPermissionID = 1001;
-    String hasil, semestera, matkula, dosena, ruanga;
-
+    BaseApiService mApiService;
+    SharedPrefManager sharedPrefManager;
+    String token, hasil,id;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -48,7 +63,7 @@ public class QrScanner extends AppCompatActivity implements Serializable{
                             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                             //                                          int[] grantResults)
                             // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
+                            // for ActivityCompat#requestPermissions for more Details.
                             return;
                         }
                         cameraSource.start(cameraPreview.getHolder());
@@ -65,6 +80,11 @@ public class QrScanner extends AppCompatActivity implements Serializable{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scanner);
+        mApiService = UtilsApi.getAPIService();
+//token
+        sharedPrefManager = new SharedPrefManager(QrScanner.this);
+        token = sharedPrefManager.getSpToken();
+        Log.d("token dari shared", token);
 
         cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
         txtResult = (TextView) findViewById(R.id.txtResult);
@@ -101,6 +121,38 @@ public class QrScanner extends AppCompatActivity implements Serializable{
                 cameraSource.stop();
             }
         });
+
+        getCek();
+    }
+
+    private void getCek() {
+        final Intent intentA = new Intent(QrScanner.this, RatingActivity.class);
+        mApiService.cekRating(
+                "Bearer " + token
+        ).enqueue(new Callback<CekList>() {
+            @Override
+            public void onResponse(Call<CekList> call, Response<CekList> response) {
+                if (response.isSuccessful()) {
+                    List<Cek> cek = response.body().getSementaraArrayList();
+                    for (Cek data : cek) {
+                       id = data.getId();
+                    }
+                    intentA.putExtra("idDetail", id);
+                    startActivity(intentA);
+                    finish();
+                } else
+                    generatebarcode();
+            }
+
+            @Override
+            public void onFailure(Call<CekList> call, Throwable t) {
+                Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+                Toast.makeText(QrScanner.this, "Koneksi Internet Bermasalah", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void generatebarcode() {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -121,12 +173,12 @@ public class QrScanner extends AppCompatActivity implements Serializable{
                             vibrator.vibrate(1000);
                             txtResult.setText(qrcodes.valueAt(0).displayValue);
                             hasil = txtResult.getText().toString();
-                            if(!hasil.isEmpty()){
-                                Intent back = new Intent(QrScanner.this, AbsensiActivity.class);
-                                back.putExtra("hasil", hasil);
-                                startActivity(back);
-                                finish();
-                            }
+//                            if(!hasil.isEmpty()){
+//                                Intent back = new Intent(QrScanner.this, AbsensiActivity.class);
+//                                back.putExtra("hasil", hasil);
+//                                startActivity(back);
+//                                finish();
+//                            }
                         }
                     });
                 }
@@ -141,6 +193,4 @@ public class QrScanner extends AppCompatActivity implements Serializable{
         startActivity(back);
         finish();
     }
-
-
 }

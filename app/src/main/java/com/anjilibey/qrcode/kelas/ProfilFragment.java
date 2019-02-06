@@ -39,6 +39,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.anjilibey.qrcode.Api.UtilsApi.BASE_URL_API;
+
 public class ProfilFragment extends Fragment implements View.OnClickListener{
     BaseApiService mApiService;
     ImageView btn;
@@ -55,6 +57,7 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
     Context mContext;
     SharedPrefManager sharedPrefManager;
     String token;
+    String base_url = BASE_URL_API;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -66,7 +69,7 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
         token = sharedPrefManager.getSpToken();
         Log.d("profil token", token);
 
-        String url = "http://10.203.253.239:8000/api/profile";
+        String url = base_url+"/api/profile";
 
         FetchData fetchData = new FetchData();
         fetchData.execute(url);

@@ -7,11 +7,14 @@
     card_view:cardElevation="3dp"
     card_view:cardUseCompatPadding="true">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
@@ -111,6 +114,22 @@
 
         </LinearLayout>
 
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/arrow" />
+    </LinearLayout>
+
+
+</LinearLayout>
+
 
 </android.support.v7.widget.CardView>
