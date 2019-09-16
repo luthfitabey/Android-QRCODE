@@ -99,14 +99,28 @@
                             android:id="@+id/txt3"
                             android:layout_width="match_parent"
                             android:text="Keseuaian RKPS"
-                            android:layout_weight="1"
+                            android:layout_weight="0.6"
                             android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/txtkesesuaian"
                             android:layout_width="match_parent"
-
                             android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.7"
+                            android:text="%"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:text="* Keterangan: \n 1. 0-30%= tidak sesuai \n 2. 40-70%= sesuai \n 3. >70%= sangat sesuai "
+                            android:textStyle="bold|italic"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <LinearLayout
@@ -178,22 +192,38 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Sisa Waktu Presensi"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+
+                        <!-- TextView Npm Mahasiswa -->
+                        <TextView
+                            android:id="@+id/txtsisawaktu"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                     <!--<LinearLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content">-->
-                        <!--<TextView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:text="NIP Dosen"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:layout_height="wrap_content" />-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+                    <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:text="NIP Dosen"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_height="wrap_content" />-->
 
-                        <!--&lt;!&ndash; TextView Npm Mahasiswa &ndash;&gt;-->
-                        <!--<TextView-->
-                            <!--android:id="@+id/txtnip"-->
-                            <!--android:layout_width="match_parent"-->
+                    <!--&lt;!&ndash; TextView Npm Mahasiswa &ndash;&gt;-->
+                    <!--<TextView-->
+                    <!--android:id="@+id/txtnip"-->
+                    <!--android:layout_width="match_parent"-->
 
-                            <!--android:layout_weight="1"-->
-                            <!--android:layout_height="wrap_content" />-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_height="wrap_content" />-->
                     <!--</LinearLayout>-->
 
                 </LinearLayout>
@@ -365,17 +395,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <Button
-                        android:id="@+id/btnSubmit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="#e57373"
-                        android:text="Send feedback"
-                        android:layout_weight="1"
-                        android:onClick="btnSubmit"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@android:color/white" />
-                    <Button
                         android:id="@+id/btnScan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -385,7 +404,21 @@
                         android:text="Scan"
                         android:onClick="btnScan"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:textColor="@android:color/white" />
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="#e57373"
+                        android:text="Presensi"
+                        android:layout_weight="1"
+                        android:onClick="btnSubmit"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/white" />
+
                 </LinearLayout>
 
             </LinearLayout>

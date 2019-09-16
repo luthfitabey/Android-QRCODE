@@ -71,7 +71,7 @@ public class HistoryActivity extends AppCompatActivity {
                     generateEmployeeList(response.body().getSementaraArrayList());
                 } else {
                     loading.dismiss();
-                    Toast.makeText(HistoryActivity.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HistoryActivity.this, "Data riwayat kosong", Toast.LENGTH_SHORT).show();
                 }
         }
 

@@ -27,7 +27,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull JadwalAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.tv_nip.setText(result.get(i).nip_dosen);
+//        viewHolder.tv_nip.setText(result.get(i).nip_dosen);
         viewHolder.tv_matkul.setText(result.get(i).kelas);
         viewHolder.tv_kode.setText(result.get(i).kode_mk);
         viewHolder.tv_kelas.setText(result.get(i).id_ruang);
@@ -49,7 +49,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder
         public ViewHolder(View view) {
             super(view);
 
-            tv_nip = (TextView)view.findViewById(R.id.jadNip);
+//            tv_nip = (TextView)view.findViewById(R.id.jadNip);
             tv_matkul = (TextView)view.findViewById(R.id.jadMat);
             tv_kode = (TextView)view.findViewById(R.id.jadKode);
             tv_kelas = (TextView)view.findViewById(R.id.jadKel);

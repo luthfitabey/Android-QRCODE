@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 import com.anjilibey.qrcode.Adapter.JadwalAdapter;
-import com.anjilibey.qrcode.Adapter.MateriAdapter;
 import com.anjilibey.qrcode.Api.BaseApiService;
 import com.anjilibey.qrcode.Api.SharedPrefManager;
 import com.anjilibey.qrcode.Api.UtilsApi;
@@ -80,7 +79,7 @@ public class JadwalActivity extends AppCompatActivity {
                     generateJadwalList(response.body().getJadwalArrayList());
                 } else {
                     loading.dismiss();
-                    Toast.makeText(JadwalActivity.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JadwalActivity.this, "Data jadwal kosong", Toast.LENGTH_SHORT).show();
                 }
             }
 

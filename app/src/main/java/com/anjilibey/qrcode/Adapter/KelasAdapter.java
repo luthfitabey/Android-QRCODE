@@ -49,7 +49,7 @@ public class KelasAdapter extends RecyclerView.Adapter<KelasAdapter.ViewHolder>{
         viewHolder.kelas.setText(result.get(i).kelas);
         viewHolder.kode.setText(result.get(i).kode_mk);
         viewHolder.semester.setText(result.get(i).paket_semester);
-        viewHolder.nip.setText(result.get(i).nip_dosen);
+//        viewHolder.nip.setText(result.get(i).nip_dosen);
         viewHolder.id.setText(result.get(i).id_kls);
 
         final String kls = result.get(i).getId_kls();
@@ -76,7 +76,7 @@ public class KelasAdapter extends RecyclerView.Adapter<KelasAdapter.ViewHolder>{
             kelas = (TextView)view.findViewById(R.id.klsKelas);
             kode = (TextView)view.findViewById(R.id.klsKode);
             semester = (TextView)view.findViewById(R.id.klsPaket);
-            nip = (TextView)view.findViewById(R.id.klsNip);
+//            nip = (TextView)view.findViewById(R.id.klsNip);
 
         }
     }

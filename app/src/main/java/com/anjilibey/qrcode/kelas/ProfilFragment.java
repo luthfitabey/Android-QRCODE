@@ -1,10 +1,8 @@
 package com.anjilibey.qrcode.kelas;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,8 +18,6 @@ import com.anjilibey.qrcode.Api.BaseApiService;
 import com.anjilibey.qrcode.Api.SharedPrefManager;
 import com.anjilibey.qrcode.Api.UtilsApi;
 import com.anjilibey.qrcode.R;
-import com.anjilibey.qrcode.model.Profil;
-import com.anjilibey.qrcode.model.Profiles;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,12 +28,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import android.os.AsyncTask;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.anjilibey.qrcode.Api.UtilsApi.BASE_URL_API;
 
@@ -53,7 +43,7 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
     TextView tvphone;
     TextView tvnpwp;
     Button btnOut, btnUbah;
-    String idP;
+    String idP, no_rek, na_rek, nik, idUser;
     Context mContext;
     SharedPrefManager sharedPrefManager;
     String token;
@@ -90,54 +80,17 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
         tvnpwp = view.findViewById(R.id.npwp);
         btnOut = view.findViewById(R.id.btnKeluar);
         btnUbah = view.findViewById(R.id.btnUbh);
+        ImageView ubahProfil = (ImageView) view.findViewById(R.id.buttonUbah);
+//        ImageView writeProfil = (ImageView) view.findViewById(R.id.btnWrite);
         sharedPrefManager = new SharedPrefManager(getActivity());
         btn.setOnClickListener(this);
-
-//        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data","Please wait..",false,false);
-//        mApiService.getProfil("Bearer "+token
-//        ).enqueue(new Callback<Profiles>() {
-//            @Override
-//            public void onResponse(Call<Profiles> call, Response<Profiles> response) {
-//                if (response.isSuccessful()) {
-//                    loading.dismiss();
-////                    List<Profil> profile = response.body().getProfiles();
-//                    Profil profil = (Profil) response.body().getProfiles();
-//                    String nama = profil.getNama();
-//                    Log.d("nama: ", nama);
-////                    for (Profil data : profile) {
-////
-////                        tvname.setText(data.getNama());
-////                        Log.d("nama: ", data.getNama());
-////                        tvaddress.setText(data.getAlamat());
-////                        tvprodi.setText(data.getProdi());
-////                        tvangkatan.setText(data.getAngkatan());
-////                        tvphone.setText(data.getNo_telp());
-////                        tvniu.setText(data.getNiu());
-////                        tvnif.setText(data.getNif());
-////                        tvnpwp.setText(data.getNpwp());
-////                    }
-//
-//                }
-//                else {
-//                    loading.dismiss();
-//                    Log.d("hasilnya: ", "gagal");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Profiles> call, Throwable t) {
-//                loading.dismiss();
-//                Log.e("debug", "onFailure: ERROR > " + t.getMessage());
-//            }
-//        });
-
 
         btnOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
                 sharedPrefManager.deleteSPString(SharedPrefManager.SP_TOKEN);
-
+                Toast.makeText(getActivity(), "Berhasil Keluar", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), LoginActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 getActivity().finish();
@@ -147,24 +100,58 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 Intent abc = new Intent(mContext, UbahPass.class);
-                abc.putExtra("nganu", idP);
-                Log.d("id profil", idP);
+                abc.putExtra("nganu", idUser);
+                Log.d("id profil", idUser);
                 startActivity(abc);
-//                getActivity().finish();
+            }
+        });
+//                if (tvphone.getText().toString() == "null"){
+//                    writeProfil.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent(mContext, WriteProfil.class);
+//                            intent.putExtra("nganu", idP);
+//                            Log.d("id profil", idP);
+//                            startActivity(intent);
+//                        }
+//                    });
+//                }
+//                else{
+//                    writeProfil.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                        }
+//                    });
+//                }
+
+        ubahProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, UpdateProfil.class);
+                intent.putExtra("id_profil", idP);
+                intent.putExtra("nik", nik);
+                intent.putExtra("no_rek", no_rek);
+                intent.putExtra("na_rek", na_rek);
+                intent.putExtra("nama", tvname.getText().toString());
+                intent.putExtra("address", tvaddress.getText().toString());
+                intent.putExtra("nif", tvnif.getText().toString());
+                intent.putExtra("npwp", tvnpwp.getText().toString());
+                intent.putExtra("niu", tvniu.getText().toString());
+                intent.putExtra("phone", tvphone.getText().toString());
+                intent.putExtra("prodi", tvprodi.getText().toString());
+                intent.putExtra("angkatan", tvangkatan.getText().toString());
+                startActivity(intent);
+                onPause();
             }
         });
 
         return view;
     }
 
-
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), UpdateProfil.class);
-        startActivityForResult(intent, 123);
+
     }
-
-
 
     public class FetchData extends AsyncTask<String, Void, String> {
         @Override
@@ -212,7 +199,7 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String niu, nif, alamat, angkatan, nama, prodi, nik, no_rek, na_rek, npwp, no_telp;
+            String niu, nif, alamat, angkatan, nama, prodi, npwp, no_telp;
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 idP = jsonObject.getJSONObject("profiles").getString("id");
@@ -228,11 +215,9 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
                 na_rek = jsonObject.getJSONObject("profiles").getString("nama_rek");
                 npwp = jsonObject.getJSONObject("profiles").getString("npwp");
                 no_telp = jsonObject.getJSONObject("profiles").getString("no_telp");
+                idUser = jsonObject.getJSONObject("profiles").getString("user_id");
 
-                Log.d("GetNiu", niu);
-//                JSONObject operatorObject = jsonObject.getJSONObject("data").getJSONObject("operator");
-//                name = operatorObject.getJSONObject("data").getString("name");
-//                number = operatorObject.getJSONObject("data").getString("operator_number");
+
                 tvname.setText(nama);
                 tvaddress.setText(alamat);
                 tvnif.setText(nif);
@@ -241,7 +226,6 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
                 tvphone.setText(no_telp);
                 tvprodi.setText(prodi);
                 tvangkatan.setText(angkatan);
-                tvphone.setText(no_telp);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -249,3 +233,43 @@ public class ProfilFragment extends Fragment implements View.OnClickListener{
         }
     }
 }
+
+
+
+//        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data","Please wait..",false,false);
+//        mApiService.getProfil("Bearer "+token
+//        ).enqueue(new Callback<Profiles>() {
+//            @Override
+//            public void onResponse(Call<Profiles> call, Response<Profiles> response) {
+//                if (response.isSuccessful()) {
+//                    loading.dismiss();
+////                    List<Profil> profile = response.body().getProfiles();
+//                    Profil profil = (Profil) response.body().getProfiles();
+//                    String nama = profil.getNama();
+//                    Log.d("nama: ", nama);
+////                    for (Profil data : profile) {
+////
+////                        tvname.setText(data.getNama());
+////                        Log.d("nama: ", data.getNama());
+////                        tvaddress.setText(data.getAlamat());
+////                        tvprodi.setText(data.getProdi());
+////                        tvangkatan.setText(data.getAngkatan());
+////                        tvphone.setText(data.getNo_telp());
+////                        tvniu.setText(data.getNiu());
+////                        tvnif.setText(data.getNif());
+////                        tvnpwp.setText(data.getNpwp());
+////                    }
+//
+//                }
+//                else {
+//                    loading.dismiss();
+//                    Log.d("hasilnya: ", "gagal");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Profiles> call, Throwable t) {
+//                loading.dismiss();
+//                Log.e("debug", "onFailure: ERROR > " + t.getMessage());
+//            }
+//        });

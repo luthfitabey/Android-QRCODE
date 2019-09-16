@@ -35,8 +35,19 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MateriAdapter.ViewHolder viewHolder, int i) {
+        String dateInString = result.get(i).tanggal;
+
+        DateFormat readFormat = new SimpleDateFormat( "yyyy-MM-dd");
+        DateFormat writeFormat = new SimpleDateFormat( "dd-MM-yyyy");
+        Date date = null;
+        try {
+            date = readFormat.parse(dateInString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String formattedDate = writeFormat.format(date);
         viewHolder.tv_id.setText(result.get(i).id);
-        viewHolder.tv_tgl.setText(result.get(i).tanggal);
+        viewHolder.tv_tgl.setText(formattedDate);
         viewHolder.tv_hari.setText(result.get(i).hari);
         viewHolder.tv_ruang.setText(result.get(i).id_ruang);
         viewHolder.tv_cap.setText(result.get(i).capaian);

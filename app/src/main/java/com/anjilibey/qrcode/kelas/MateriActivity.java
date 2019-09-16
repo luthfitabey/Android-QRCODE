@@ -11,14 +11,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anjilibey.qrcode.Adapter.DataAdapter;
 import com.anjilibey.qrcode.Adapter.MateriAdapter;
 import com.anjilibey.qrcode.Api.BaseApiService;
 import com.anjilibey.qrcode.Api.SharedPrefManager;
 import com.anjilibey.qrcode.Api.UtilsApi;
 import com.anjilibey.qrcode.R;
-import com.anjilibey.qrcode.model.History;
-import com.anjilibey.qrcode.model.HistoryList;
 import com.anjilibey.qrcode.model.Materi;
 import com.anjilibey.qrcode.model.MateriList;
 
@@ -38,7 +35,7 @@ public class MateriActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     String token;
     String id_kls;
-//    String coba= kls;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

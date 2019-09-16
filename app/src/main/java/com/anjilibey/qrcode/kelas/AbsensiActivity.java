@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import java.util.Calendar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -27,28 +28,28 @@ import com.anjilibey.qrcode.Api.UtilsApi;
 import com.anjilibey.qrcode.R;
 import com.anjilibey.qrcode.model.Pertemuan;
 import com.anjilibey.qrcode.model.Pertemuans;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import static com.anjilibey.qrcode.Api.UtilsApi.BASE_URL_API;
 
 public class AbsensiActivity extends AppCompatActivity {
     BaseApiService mApiService;
-    TextView mid, mcapaian, mkesesuaian, mmateri, mketerangan, mwaktum, mwaktus, mniu, mnama, mprodi, mangakatan, mRatingScale, mLink;
+    TextView mid, mcapaian, mkesesuaian, mmateri, mketerangan, mwaktum, mwaktus, mniu, mnama, mprodi, mangakatan, mRatingScale, mLink, msisawaktu;
     TelephonyManager tm;
     String ratingan, hasil, token;
     static String imei;
@@ -57,8 +58,9 @@ public class AbsensiActivity extends AppCompatActivity {
     Button mSendFeedback;
     SharedPrefManager sharedPrefManager;
     String base_url = BASE_URL_API;
-
-    @SuppressLint({"HardwareIds", "MissingPermission"})
+    private int PHONE_STATE_CODE=1;
+    String waktuMulai, waktuSelesai;
+//    @SuppressLint({"HardwareIds", "MissingPermission"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absensi);
@@ -74,6 +76,7 @@ public class AbsensiActivity extends AppCompatActivity {
         mprodi = findViewById(R.id.txtprodi);
         mangakatan = findViewById(R.id.txtangkatan);
         mLink = findViewById(R.id.txtLink);
+        msisawaktu = findViewById(R.id.txtsisawaktu);
 //        mnip = findViewById(R.id.txtnip);
 
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
@@ -140,17 +143,56 @@ public class AbsensiActivity extends AppCompatActivity {
         token = sharedPrefManager.getSpToken();
         Log.d("token dari shared", token);
 
+        //imei
+        generateImei();
+
         //clickable link
         mLink.setMovementMethod(LinkMovementMethod.getInstance());
         //untuk retrofit
         getResultPertemuan();
-
 //      api get untuk asynctask
         String url = base_url+"/api/profile";
         FetchData fetchData = new FetchData();
         fetchData.execute(url);
-
     }
+
+    private void generateImei(){
+        //ambil imei
+        tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more Details.
+            reqPhonePermission();
+            return;
+        }
+        imei = tm.getDeviceId();
+    }
+
+    private void reqPhonePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)){
+            new AlertDialog.Builder(this).setTitle("permission needed").setMessage("this permission needed")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ActivityCompat.requestPermissions(AbsensiActivity.this,new String[]{Manifest.permission.READ_PHONE_STATE},PHONE_STATE_CODE);
+
+                        }
+                    }) .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            }).create().show();
+        } else {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE},PHONE_STATE_CODE);
+        }
+    }
+
     private void getResultPertemuan() {
         final ProgressDialog loading = ProgressDialog.show(AbsensiActivity.this, "Fetching Data","Please wait..",false,false);
         mApiService.getPertemuan("Bearer "+token,
@@ -169,7 +211,10 @@ public class AbsensiActivity extends AppCompatActivity {
                         mwaktum.setText(data.getWaktu_mulai());
                         mwaktus.setText(data.getWaktu_selesai());
                         mLink.setText(data.getMateri());
+                        waktuMulai=data.getWaktu_mulai();
+                        waktuSelesai=data.getWaktu_selesai();
                     }
+                    getWaktu();
                 }
                 else {
                     loading.dismiss();
@@ -256,26 +301,72 @@ public class AbsensiActivity extends AppCompatActivity {
     }
 
     public void btnSubmit(View view) {
-        //ambil imei
-        tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more Details.
-            return;
-        }
-        imei = tm.getDeviceId();
+        cekWaktu();
+    }
+    public void getWaktu(){
+        Calendar cal = Calendar.getInstance();
+        Date date=cal.getTime();
+        String strDateFormat = "HH:mm:ss";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String formattedDate= dateFormat.format(date);
+        java.text.DateFormat df = new java.text.SimpleDateFormat("HH:mm:ss");
 
-        if (mFeedback.getText().toString().isEmpty() || ratingan == null) {
-            showAlertDialogButtonClicked();
-        } else {
-            submitUser();
+        Date date1 = null, date2 = null;
+        try {
+           date1 = df.parse(formattedDate);
+           date2 = df.parse(waktuSelesai);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long diff = date2.getTime()-date1.getTime();
+        int timeInSeconds = (int) (diff / 1000);
+        int hours, minutes, seconds;
+        hours = timeInSeconds / 3600;
+        timeInSeconds = timeInSeconds - (hours * 3600);
+        minutes = timeInSeconds / 60;
+        timeInSeconds = timeInSeconds - (minutes * 60);
+        seconds = timeInSeconds;
+        String diffTime = (hours<10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        msisawaktu.setText(diffTime);
+    }
+    private void cekWaktu(){
+        String sisa = msisawaktu.getText().toString();
+        java.text.DateFormat df = new java.text.SimpleDateFormat("HH:mm:ss");
+        Date date1 = null, date2 =null;
+        try {
+            date1 = df.parse(sisa);
+            date2 = df.parse("00:00:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("sisa bosku", sisa);
+        if(sisa.contains("-") || date1.getTime() == date2.getTime()){
+            AlertDialog.Builder abc = new AlertDialog.Builder(this);
+            abc.setTitle("Peringatan !");
+            abc.setMessage("Waktu presensi anda telah habis, silahkan hubungi dosen");
+
+            // add the buttons
+            abc.setPositiveButton("Lanjutkan", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(AbsensiActivity.this, QrScanner.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            // create and show the alert dialog
+            AlertDialog dialog = abc.create();
+            dialog.show();
+        }
+        else if(date1.getTime() > date2.getTime()){
+            if (mFeedback.getText().toString().isEmpty() || ratingan == null) {
+                showAlertDialogButtonClicked();
+            } else {
+                submitUser();
+            }
         }
     }
+
 
     private void showAlertDialogButtonClicked() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -314,7 +405,7 @@ public class AbsensiActivity extends AppCompatActivity {
                     mFeedback.setText("");
                     mRatingBar.setRating(0);
                 } else
-                    Toast.makeText(AbsensiActivity.this, "Gagal Disimpan, pastikan anda tidak melakukan presensi di handphone teman anda", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AbsensiActivity.this, "Gagal Disimpan, pastikan anda: \n 1. Terdaftar di KRS \n 2. Menggunakan Handphone anda sendiri \n 3. Tidak melakukan presensi 2 kali ", Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -158,7 +158,6 @@ public class QrScanner extends AppCompatActivity implements Serializable{
             public void release() {
 
             }
-
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 //string
@@ -172,13 +171,10 @@ public class QrScanner extends AppCompatActivity implements Serializable{
                             Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(1000);
                             txtResult.setText(qrcodes.valueAt(0).displayValue);
+                            cameraSource.stop();
+//                            hasil = (qrcodes.valueAt(0)).toString();
                             hasil = txtResult.getText().toString();
-//                            if(!hasil.isEmpty()){
-//                                Intent back = new Intent(QrScanner.this, AbsensiActivity.class);
-//                                back.putExtra("hasil", hasil);
-//                                startActivity(back);
-//                                finish();
-//                            }
+                            done();
                         }
                     });
                 }
@@ -186,7 +182,7 @@ public class QrScanner extends AppCompatActivity implements Serializable{
         });
     }
 
-    public void done(View view) {
+    public void done() {
         hasil = txtResult.getText().toString();
         Intent back = new Intent(QrScanner.this, AbsensiActivity.class);
         back.putExtra("hasil", hasil);

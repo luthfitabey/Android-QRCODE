@@ -1,7 +1,6 @@
 package com.anjilibey.qrcode.kelas;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,20 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.anjilibey.qrcode.Adapter.DataAdapter;
 import com.anjilibey.qrcode.Adapter.KelasAdapter;
-import com.anjilibey.qrcode.Adapter.MateriAdapter;
 import com.anjilibey.qrcode.Api.BaseApiService;
 import com.anjilibey.qrcode.Api.SharedPrefManager;
 import com.anjilibey.qrcode.Api.UtilsApi;
 import com.anjilibey.qrcode.R;
-import com.anjilibey.qrcode.model.History;
-import com.anjilibey.qrcode.model.HistoryList;
 import com.anjilibey.qrcode.model.Kelas;
 import com.anjilibey.qrcode.model.KelasList;
-import com.anjilibey.qrcode.model.Materi;
-import com.anjilibey.qrcode.model.MateriList;
+
 
 import java.util.ArrayList;
 
@@ -85,7 +78,7 @@ public class KelasActivity extends AppCompatActivity  {
                     generateKelasList(response.body().getSementaraArrayList());
                 } else {
                     loading.dismiss();
-                    Toast.makeText(KelasActivity.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KelasActivity.this, "Data kelas kosong", Toast.LENGTH_SHORT).show();
                 }
             }
 

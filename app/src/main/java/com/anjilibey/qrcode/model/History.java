@@ -21,9 +21,58 @@ public class History {
     public String created_at;
     @SerializedName("updated_at")
     public String updated_at;
+    @SerializedName("kelas")
+    public String kelas;
+    @SerializedName("kode_mk")
+    public String kode_mk;
+    @SerializedName("waktu_mulai")
+    public String waktu_mulai;
+    @SerializedName("waktu_selesai")
+    public String waktu_selesai;
+    @SerializedName("paket_semester")
+    public String paket_semester;
     @SerializedName("history")
     public String history;
 
+    public String getKelas() {
+        return kelas;
+    }
+
+    public void setKelas(String kelas) {
+        this.kelas = kelas;
+    }
+
+    public String getKode_mk() {
+        return kode_mk;
+    }
+
+    public void setKode_mk(String kode_mk) {
+        this.kode_mk = kode_mk;
+    }
+
+    public String getWaktu_mulai() {
+        return waktu_mulai;
+    }
+
+    public void setWaktu_mulai(String waktu_mulai) {
+        this.waktu_mulai = waktu_mulai;
+    }
+
+    public String getWaktu_selesai() {
+        return waktu_selesai;
+    }
+
+    public void setWaktu_selesai(String waktu_selesai) {
+        this.waktu_selesai = waktu_selesai;
+    }
+
+    public String getPaket_semester() {
+        return paket_semester;
+    }
+
+    public void setPaket_semester(String paket_semester) {
+        this.paket_semester = paket_semester;
+    }
     public String getCreated_at() {
         return created_at;
     }
@@ -71,6 +120,7 @@ public class History {
     public void setId_mhs(String id_mhs) {
         this.id_mhs = id_mhs;
     }
+
 
     public String getHistory() {
         return history;

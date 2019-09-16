@@ -53,6 +53,8 @@ String token, id;
     public void btnUbah(View view) {
         String a = mPass.getText().toString().trim();
         String b = mCPass.getText().toString().trim();
+        String c = mCPass.getText().toString();
+        Log.d("hoho pass", c);
         if (a.isEmpty()) {
             mPass.setError("Harap masukkan Password");
             mPass.requestFocus();
@@ -73,31 +75,33 @@ String token, id;
             mPass.requestFocus();
             return;
         }
-        loading = ProgressDialog.show(UbahPass.this, null, "Harap Tunggu...", true, false);
-        mApiService.userRequest(
-                "application/json",
-                "Bearer "+token,
-                id,
-                mPass.getText().toString()
-                ).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            loading.dismiss();
-                            Toast.makeText(UbahPass.this, "Berhasil Disimpan", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(UbahPass.this, Dashboard.class));
-                            finish();
-                        } else {
-                            loading.dismiss();
-                            Toast.makeText(UbahPass.this, "Maaf data anda salah", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("debug", "onFailure: ERROR > " + t.toString());
+        else {
+            loading = ProgressDialog.show(UbahPass.this, null, "Harap Tunggu...", true, false);
+            mApiService.userRequest(
+                    "application/json",
+                    "Bearer " + token,
+                    id,
+                    c
+            ).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
                         loading.dismiss();
+                        Toast.makeText(UbahPass.this, "Berhasil Disimpan", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(UbahPass.this, Dashboard.class));
+                        finish();
+                    } else {
+                        loading.dismiss();
+                        Toast.makeText(UbahPass.this, "Maaf data anda salah", Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("debug", "onFailure: ERROR > " + t.toString());
+                    loading.dismiss();
+                }
+            });
+        }
     }
 }
